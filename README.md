@@ -31,6 +31,9 @@ Vue.use(VueShortcuts, { prevent: ['input'] })
   { shortcut: [ 'ctrl', 'space' ], callback: foo, push: true, focus: true },
   { shortcut: [ 'shift', 'esc' ], callback: bar, once: true, disabled: someBoolean },
 ]">
+
+<component2 v-shortcuts="[ { avoid: true } ]">
+
 ```
 ### Props
 
@@ -42,6 +45,35 @@ Vue.use(VueShortcuts, { prevent: ['input'] })
 | push | Boolean | `false` | Trigger only on keydown and up, not contiuously while held |
 | focus | Boolean | `false` | Focus element instead of calling callback |
 | disabled | Boolean | `false` | Reactive property that disables that key |
+| avoid | Boolean | `false` | Prevent the event when this element is focused |
+
+#### Key list
+| Key                        | Shortkey Name |
+|----------------------------|---------------|
+| Shift                      | shift         |
+| Control                    | ctrl          |
+| Alt                        | alt           |
+| Alt Graph                  | altgraph      |
+| Super (Windows or Mac Cmd) | meta          |
+| Arrow Up                   | arrowup       |
+| Arrow Down                 | arrowdown     |
+| Arrow Left                 | arrowleft     |
+| Arrow Right                | arrowright    |
+| Enter                      | enter         |
+| Escape                     | esc           |
+| Tab                        | tab           |
+| Space                      | space         |
+| Page Up                    | pageup        |
+| Page Down                  | pagedown      |
+| Home                       | home          |
+| End                        | end           |
+| A - Z                      | a-z           |
+| 0-9                        | 0-9           |
+| F1-F12                     | f1-f12        |
+
+## Credit
+
+Initally forked from [iFgR/vue-shortkey](https://github.com/iFgR/vue-shortkey)
 
 ## License
 
