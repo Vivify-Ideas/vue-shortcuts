@@ -7,41 +7,49 @@
 
 import { ShortcutsHelper } from './../helpers/shortcuts-helper';
 
-const shortcutsDirective = {
+const ShortcutsDirective = {
   bind: (el, binding, vnode) => {
-    let bindings = typeof binding.value === 'string' ? JSON.parse(binding.value.replace(/'/gi, '"')) : binding.value;
-    _.forEach(bindings, (b) => {
-      if (b.avoid) {
+    let shortcuts = binding.value;
+    for (let i in shortcuts) {
+      if (shortcuts[i].avoid) {
         ShortcutsHelper.objAvoided.push(el);
         return;
       }
-      let k = b.shortkey.join('');
+      let k = shortcuts[i].shortcut.join('');
       if (!ShortcutsHelper.mapFunctions[k]) {
         ShortcutsHelper.mapFunctions[k] = [];
       }
       ShortcutsHelper.mapFunctions[k].push({
-        'ps': b.push === true,
-        'oc': b.once === true,
-        'fn': !(b.focus === true),
-        'cb': b.callback,
+        'ps': shortcuts[i].push === true,
+        'oc': shortcuts[i].once === true,
+        'fn': !(shortcuts[i].focus === true),
+        'db': shortcuts[i].disabled || false,
+        'cb': shortcuts[i].callback,
         'el': vnode.elm
       });
-    });
+    }
   },
   unbind: (el, binding) => {
-    let bindings = typeof binding.value === 'string' ? JSON.parse(binding.value.replace(/'/gi, '"')) : binding.value;
-    _.forEach(bindings, (b) => {
-      if (b) {
-        let k = b.shortkey.join('');
-        let mapFunctionIndex = _.findIndex(ShortcutsHelper.mapFunctions[k], { el: el });
-        delete ShortcutsHelper.mapFunctions[k][mapFunctionIndex];
+    let shortcuts = binding.value;
+    for (let i in shortcuts) {
+      if (shortcuts[i]) {
+        let k = shortcuts[i].shortcut.join('');
+
+        delete ShortcutsHelper.mapFunctions[k][ShortcutsHelper.findIndexOf(k, el)];
       }
 
       ShortcutsHelper.objAvoided = _.reject(ShortcutsHelper.objAvoided, (obj) => {
         return obj === el;
       });
-    });
+    }
+  },
+  update: (el, binding, vnode) => {
+    let shortcuts = binding.value;
+    for (let i in shortcuts) {
+      let k = shortcuts[i].shortcut.join('');
+      ShortcutsHelper.mapFunctions[k][ShortcutsHelper.findIndexOf(k, el)].db = shortcuts[i].disabled || false;
+    }
   }
 }
 
-export { shortcutsDirective };
+export { ShortcutsDirective };

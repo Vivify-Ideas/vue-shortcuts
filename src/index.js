@@ -8,8 +8,7 @@ import { ShortcutsDirective } from './directives/shortcuts-directive';
 import { ShortcutsHelper } from './helpers/shortcuts-helper';
 
 exports.install = (Vue, options) => {
-  ShortcutsHelper.init();
-  ShortcutsHelper.elementAvoided = [ ...(options && options.prevent ? options.prevent : []) ];
+  ShortcutsHelper.init(options || {});
   Vue.directive('shortcuts', ShortcutsDirective);
 };
 

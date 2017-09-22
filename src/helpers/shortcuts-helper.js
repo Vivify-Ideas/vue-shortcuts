@@ -7,15 +7,18 @@ class ShortcutsHelper {
   }
 
   init() {
-    document.addEventListener('ekeydown', (event) => {
-      const decodedKey = decodeKey(event);
-      if (filteringElement(decodedKey)) {
+    if (options.prevent && options.prevent.isArray) {
+      throw new Error('Please define options.prevent as an array');
+    }
+    this.elementAvoided = options && options.prevent ? options.prevent : [];
+    document.addEventListener('keydown', (event) => {
+      const decodedKey = this.decodeKey(event);
+      if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
         _.forEach(this.mapFunctions[decodedKey], (mapFunction) => {
-          console.log(mapFunction);
           if (mapFunction.fn) {
-            keyDown(event, mapFunction, decodedKey);
+            this.keyDown(event, mapFunction, decodedKey);
             this.keyPressed = true;
           } else if (!this.keyPressed) {
             mapFunction.el.focus();
@@ -26,19 +29,19 @@ class ShortcutsHelper {
     }, true);
 
     document.addEventListener('keyup', (event) => {
-      const decodedKey = decodeKey(event);
-      if (filteringElement(decodedKey)) {
+      const decodedKey = this.decodeKey(event);
+      if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
         _.forEach(this.mapFunctions[decodedKey], (mapFunction) => {
           if (mapFunction.oc || mapFunction.ps) {
-            keyUp(event, mapFunction, decodedKey);
+            this.keyUp(event, mapFunction, decodedKey);
           }
         });
       }
       this.keyPressed = false;
     }, true);
-  };
+  }
 
   decodeKey(pKey) {
     let k = '';
@@ -95,26 +98,27 @@ class ShortcutsHelper {
     }
     if ((pKey.key && pKey.key !== ' ' && pKey.key.length === 1) || /F\d{1,2}/g.test(pKey.key)) k += pKey.key.toLowerCase();
     return k;
-  };
+  }
 
   keyDown(event, mapFunction, decodedKey) {
     if ((!mapFunction.oc && !mapFunction.ps) || (mapFunction.ps && !this.keyPressed)) {
       mapFunction.cb(event, decodedKey);
     }
-  };
+  }
+
   keyUp(event, mapFunction, decodedKey) {
     mapFunction.cb(event, decodedKey);
-  };
+  }
 
   filteringElement(decodedKey) {
     const objectAvoid = this.objAvoided.find(r => r === document.activeElement);
-    const elementSeparate = checkElementType();
+    const elementSeparate = this.checkElementType();
     const elementTypeAvoid = elementSeparate.avoidedTypes;
     const elementClassAvoid = elementSeparate.avoidedClasses;
     const filterTypeAvoid = elementTypeAvoid.find(r => r === document.activeElement.tagName.toLowerCase());
     const filterClassAvoid = elementClassAvoid.find(r => r === '.' + document.activeElement.className.toLowerCase());
     return !objectAvoid && !_.isEmpty(this.mapFunctions[decodedKey]) && !filterTypeAvoid && !filterClassAvoid;
-  };
+  }
 
   checkElementType() {
     let elmTypeAvoid = [];
@@ -132,7 +136,15 @@ class ShortcutsHelper {
     });
 
     return { avoidedTypes: elmTypeAvoid, avoidedClasses: elmClassAvoid };
-  };
+  }
+
+  findIndexOf(k, el) {
+    for (var i = 0; i < this.mapFunctions[k].length; i++) {
+      if (this.mapFunctions[k][i].el === el) {
+        return i;
+      }
+    }
+  }
 }
 
 let shortcutsHelper = new ShortcutsHelper();
