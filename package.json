@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Vivify-Ideas/vue-shortcuts/issues"
   },
-  "homepage": "https://github.com/Vivify-Ideas/vue-shortcuts#readme"
+  "homepage": "https://github.com/Vivify-Ideas/vue-shortcuts",
+  "dependencies": {
+    "vue": "^2.1.0"
+  }
 }
