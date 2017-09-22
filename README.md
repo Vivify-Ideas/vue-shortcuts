@@ -18,8 +18,12 @@ npm install --save vue-shortcuts
 import Vue from 'vue'
 import VueShortcuts from 'vue-shortcuts'
 
-Vue.use(VueShortcuts )
+Vue.use(VueShortcuts, { prevent: ['input'] })
 ```
+### Options
+| Prop | Type | Default | Describe |
+| ---- | ---- | ------- | ------- |
+| prevent | Array | `[]` | List of selectors that will ignore the event |
 
 ### Syntax
 ```
