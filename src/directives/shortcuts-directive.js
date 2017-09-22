@@ -1,10 +1,3 @@
-/*
- * shortcuts.directive.js
- * Copyright (C) 2017 pavle <pavle@hp>
- *
- * Distributed under terms of the BSD 2-Clause license.
- */
-
 import { ShortcutsHelper } from './../helpers/shortcuts-helper';
 
 const ShortcutsDirective = {
