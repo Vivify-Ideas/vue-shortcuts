@@ -17,6 +17,9 @@ class ShortcutsHelper {
         event.preventDefault();
         event.stopPropagation();
         _.forEach(this.mapFunctions[decodedKey], (mapFunction) => {
+          if (mapFunction.db) {
+            return;
+          }
           if (mapFunction.fn) {
             this.keyDown(event, mapFunction, decodedKey);
             this.keyPressed = true;
@@ -34,6 +37,9 @@ class ShortcutsHelper {
         event.preventDefault();
         event.stopPropagation();
         _.forEach(this.mapFunctions[decodedKey], (mapFunction) => {
+          if (mapFunction.db) {
+            return;
+          }
           if (mapFunction.oc || mapFunction.ps) {
             this.keyUp(event, mapFunction, decodedKey);
           }
