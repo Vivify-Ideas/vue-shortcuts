@@ -1,0 +1,24 @@
+{
+  "name": "vue-shortcuts",
+  "version": "1.0.0",
+  "description": "Vue plugin for keyboard shortcuts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vivify-Ideas/vue-shortcuts.git"
+  },
+  "keywords": [
+    "vue",
+    "shortcuts",
+    "keyboard"
+  ],
+  "author": "Vivify Ideas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Vivify-Ideas/vue-shortcuts/issues"
+  },
+  "homepage": "https://github.com/Vivify-Ideas/vue-shortcuts#readme"
+}
