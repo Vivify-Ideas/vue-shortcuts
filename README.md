@@ -47,7 +47,7 @@ Vue.use(VueShortcuts, { prevent: ['input'] })
 | disabled | Boolean | `false` | Reactive property that disables that key |
 | avoid | Boolean | `false` | Prevent the event when this element is focused |
 
-#### Key list
+### Key list
 | Key                        | Shortkey Name |
 |----------------------------|---------------|
 | Shift                      | shift         |
