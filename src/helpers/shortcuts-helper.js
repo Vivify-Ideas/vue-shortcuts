@@ -6,7 +6,7 @@ class ShortcutsHelper {
     this.keyPressed = false;
   }
 
-  init() {
+  init(options) {
     if (options.prevent && options.prevent.isArray) {
       throw new Error('Please define options.prevent as an array');
     }
