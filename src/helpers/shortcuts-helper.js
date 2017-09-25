@@ -125,7 +125,7 @@ class ShortcutsHelper {
     const elementClassAvoid = elementSeparate.avoidedClasses;
     const filterTypeAvoid = elementTypeAvoid.find(r => r === document.activeElement.tagName.toLowerCase());
     const filterClassAvoid = elementClassAvoid.find(r => r === '.' + document.activeElement.className.toLowerCase());
-    return !objectAvoid && this.mapFunctions[decodedKey].length && !filterTypeAvoid && !filterClassAvoid;
+    return !objectAvoid && this.mapFunctions[decodedKey] && this.mapFunctions[decodedKey].length && !filterTypeAvoid && !filterClassAvoid;
   }
 
   checkElementType() {
