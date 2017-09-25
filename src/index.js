@@ -5,4 +5,3 @@ exports.install = (Vue, options) => {
   ShortcutsHelper.init(options || {});
   Vue.directive('shortcuts', ShortcutsDirective);
 };
-

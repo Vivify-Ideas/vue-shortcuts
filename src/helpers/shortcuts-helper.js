@@ -16,7 +16,8 @@ class ShortcutsHelper {
       if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
-        _.forEach(this.mapFunctions[decodedKey], (mapFunction) => {
+        for (let i in this.mapFunctions[decodedKey]) {
+          let mapFunction = this.mapFunctions[decodedKey][i];
           if (mapFunction.db) {
             return;
           }
@@ -27,7 +28,7 @@ class ShortcutsHelper {
             mapFunction.el.focus();
             this.keyPressed = true;
           }
-        });
+        }
       }
     }, true);
 
@@ -36,14 +37,15 @@ class ShortcutsHelper {
       if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
-        _.forEach(this.mapFunctions[decodedKey], (mapFunction) => {
+        for (let i in this.mapFunctions[decodedKey]) {
+          let mapFunction = this.mapFunctions[decodedKey][i];
           if (mapFunction.db) {
             return;
           }
           if (mapFunction.oc || mapFunction.ps) {
             this.keyUp(event, mapFunction, decodedKey);
           }
-        });
+        }
       }
       this.keyPressed = false;
     }, true);
@@ -123,7 +125,7 @@ class ShortcutsHelper {
     const elementClassAvoid = elementSeparate.avoidedClasses;
     const filterTypeAvoid = elementTypeAvoid.find(r => r === document.activeElement.tagName.toLowerCase());
     const filterClassAvoid = elementClassAvoid.find(r => r === '.' + document.activeElement.className.toLowerCase());
-    return !objectAvoid && !_.isEmpty(this.mapFunctions[decodedKey]) && !filterTypeAvoid && !filterClassAvoid;
+    return !objectAvoid && this.mapFunctions[decodedKey].length && !filterTypeAvoid && !filterClassAvoid;
   }
 
   checkElementType() {
