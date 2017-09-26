@@ -1,6 +1,6 @@
 {
   "name": "vue-shortcuts",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Vue plugin for keyboard shortcuts",
   "main": "dist/index.js",
   "scripts": {
