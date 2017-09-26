@@ -16,10 +16,10 @@ class ShortcutsHelper {
       if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
-        for (let i in this.mapFunctions[decodedKey]) {
+        for (let i = 0; i < this.mapFunctions[decodedKey].length; i++) {
           let mapFunction = this.mapFunctions[decodedKey][i];
           if (mapFunction.db) {
-            return;
+            continue;
           }
           if (mapFunction.fn) {
             this.keyDown(event, mapFunction, decodedKey);
@@ -37,10 +37,10 @@ class ShortcutsHelper {
       if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
-        for (let i in this.mapFunctions[decodedKey]) {
+        for (let i = 0; i < this.mapFunctions[decodedKey].length; i++) {
           let mapFunction = this.mapFunctions[decodedKey][i];
           if (mapFunction.db) {
-            return;
+            continue;
           }
           if (mapFunction.oc || mapFunction.ps) {
             this.keyUp(event, mapFunction, decodedKey);
@@ -131,7 +131,7 @@ class ShortcutsHelper {
   checkElementType() {
     let elmTypeAvoid = [];
     let elmClassAvoid = [];
-    this.elementAvoided.forEach(r => {
+    this.elementAvoided.forEach((r) => {
       const dotPosition = r.indexOf('.');
       if (dotPosition === 0) {
         elmClassAvoid.push(r);

@@ -2,31 +2,31 @@ import { ShortcutsHelper } from './../helpers/shortcuts-helper';
 
 const ShortcutsDirective = {
   bind: (el, binding, vnode) => {
-    let shortcuts = binding.value;
-    for (let i in shortcuts) {
-      if (shortcuts[i].avoid) {
+    let bindings = binding.value;
+    for (let i = 0; i < bindings.length; i++) {
+      if (bindings[i].avoid) {
         ShortcutsHelper.objAvoided.push(el);
         return;
       }
-      let k = shortcuts[i].shortcut.join('');
+      let k = bindings[i].shortcut.join('');
       if (!ShortcutsHelper.mapFunctions[k]) {
         ShortcutsHelper.mapFunctions[k] = [];
       }
       ShortcutsHelper.mapFunctions[k].push({
-        'ps': shortcuts[i].push === true,
-        'oc': shortcuts[i].once === true,
-        'fn': !(shortcuts[i].focus === true),
-        'db': shortcuts[i].disabled || false,
-        'cb': shortcuts[i].callback,
+        'ps': bindings[i].push === true,
+        'oc': bindings[i].once === true,
+        'fn': !(bindings[i].focus === true),
+        'db': bindings[i].disabled || false,
+        'cb': bindings[i].callback,
         'el': vnode.elm
       });
     }
   },
   unbind: (el, binding) => {
-    let shortcuts = binding.value;
-    for (let i in shortcuts) {
-      if (shortcuts[i]) {
-        let k = shortcuts[i].shortcut.join('');
+    let bindings = binding.value;
+    for (let i = 0; i < bindings.length; i++) {
+      if (bindings[i]) {
+        let k = bindings[i].shortcut.join('');
 
         ShortcutsHelper.mapFunctions[k].splice(ShortcutsHelper.findIndexOf(k, el), 1);
       }
@@ -40,10 +40,10 @@ const ShortcutsDirective = {
     }
   },
   update: (el, binding, vnode) => {
-    let shortcuts = binding.value;
-    for (let i in shortcuts) {
-      let k = shortcuts[i].shortcut.join('');
-      ShortcutsHelper.mapFunctions[k][ShortcutsHelper.findIndexOf(k, el)].db = shortcuts[i].disabled || false;
+    let bindings = binding.value;
+    for (let i = 0; i < bindings.length; i++) {
+      let k = bindings[i].shortcut.join('');
+      ShortcutsHelper.mapFunctions[k][ShortcutsHelper.findIndexOf(k, el)].db = bindings[i].disabled || false;
     }
   }
 }

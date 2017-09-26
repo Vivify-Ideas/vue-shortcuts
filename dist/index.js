@@ -97,10 +97,10 @@ class ShortcutsHelper {
       if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
-        for (let i in this.mapFunctions[decodedKey]) {
+        for (let i = 0; i < this.mapFunctions[decodedKey].length; i++) {
           let mapFunction = this.mapFunctions[decodedKey][i];
           if (mapFunction.db) {
-            return;
+            continue;
           }
           if (mapFunction.fn) {
             this.keyDown(event, mapFunction, decodedKey);
@@ -118,10 +118,10 @@ class ShortcutsHelper {
       if (this.filteringElement(decodedKey)) {
         event.preventDefault();
         event.stopPropagation();
-        for (let i in this.mapFunctions[decodedKey]) {
+        for (let i = 0; i < this.mapFunctions[decodedKey].length; i++) {
           let mapFunction = this.mapFunctions[decodedKey][i];
           if (mapFunction.db) {
-            return;
+            continue;
           }
           if (mapFunction.oc || mapFunction.ps) {
             this.keyUp(event, mapFunction, decodedKey);
@@ -270,31 +270,31 @@ VueShortcuts.install = (Vue, options) => {
 
 const ShortcutsDirective = {
   bind: (el, binding, vnode) => {
-    let shortcuts = binding.value;
-    for (let i in shortcuts) {
-      if (shortcuts[i].avoid) {
+    let bindings = binding.value;
+    for (let i = 0; i < bindings.length; i++) {
+      if (bindings[i].avoid) {
         __WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].objAvoided.push(el);
         return;
       }
-      let k = shortcuts[i].shortcut.join('');
+      let k = bindings[i].shortcut.join('');
       if (!__WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].mapFunctions[k]) {
         __WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].mapFunctions[k] = [];
       }
       __WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].mapFunctions[k].push({
-        'ps': shortcuts[i].push === true,
-        'oc': shortcuts[i].once === true,
-        'fn': !(shortcuts[i].focus === true),
-        'db': shortcuts[i].disabled || false,
-        'cb': shortcuts[i].callback,
+        'ps': bindings[i].push === true,
+        'oc': bindings[i].once === true,
+        'fn': !(bindings[i].focus === true),
+        'db': bindings[i].disabled || false,
+        'cb': bindings[i].callback,
         'el': vnode.elm
       });
     }
   },
   unbind: (el, binding) => {
-    let shortcuts = binding.value;
-    for (let i in shortcuts) {
-      if (shortcuts[i]) {
-        let k = shortcuts[i].shortcut.join('');
+    let bindings = binding.value;
+    for (let i = 0; i < bindings.length; i++) {
+      if (bindings[i]) {
+        let k = bindings[i].shortcut.join('');
 
         __WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].mapFunctions[k].splice(__WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].findIndexOf(k, el), 1);
       }
@@ -308,10 +308,10 @@ const ShortcutsDirective = {
     }
   },
   update: (el, binding, vnode) => {
-    let shortcuts = binding.value;
-    for (let i in shortcuts) {
-      let k = shortcuts[i].shortcut.join('');
-      __WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].mapFunctions[k][__WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].findIndexOf(k, el)].db = shortcuts[i].disabled || false;
+    let bindings = binding.value;
+    for (let i = 0; i < bindings.length; i++) {
+      let k = bindings[i].shortcut.join('');
+      __WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].mapFunctions[k][__WEBPACK_IMPORTED_MODULE_0__helpers_shortcuts_helper__["a" /* ShortcutsHelper */].findIndexOf(k, el)].db = bindings[i].disabled || false;
     }
   }
 };
