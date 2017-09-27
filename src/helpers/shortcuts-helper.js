@@ -14,10 +14,12 @@ class ShortcutsHelper {
     document.addEventListener('keydown', (event) => {
       const decodedKey = this.decodeKey(event);
       if (this.filteringElement(decodedKey)) {
-        event.preventDefault();
-        event.stopPropagation();
+        let prevent = true;
         for (let i = 0; i < this.mapFunctions[decodedKey].length; i++) {
           let mapFunction = this.mapFunctions[decodedKey][i];
+          if (!mapFunction.pv) {
+            prevent = false;
+          }
           if (mapFunction.db) {
             continue;
           }
@@ -29,22 +31,32 @@ class ShortcutsHelper {
             this.keyPressed = true;
           }
         }
+        if (prevent) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
       }
     }, true);
 
     document.addEventListener('keyup', (event) => {
       const decodedKey = this.decodeKey(event);
       if (this.filteringElement(decodedKey)) {
-        event.preventDefault();
-        event.stopPropagation();
+        let prevent = true;
         for (let i = 0; i < this.mapFunctions[decodedKey].length; i++) {
           let mapFunction = this.mapFunctions[decodedKey][i];
+          if (!mapFunction.pv) {
+            prevent = false;
+          }
           if (mapFunction.db) {
             continue;
           }
           if (mapFunction.oc || mapFunction.ps) {
             this.keyUp(event, mapFunction, decodedKey);
           }
+        }
+        if (prevent) {
+          event.preventDefault();
+          event.stopPropagation();
         }
       }
       this.keyPressed = false;

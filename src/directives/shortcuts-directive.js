@@ -17,6 +17,7 @@ const ShortcutsDirective = {
         'oc': bindings[i].once === true,
         'fn': !(bindings[i].focus === true),
         'db': bindings[i].disabled || false,
+        'pv': bindings[i].prevent === false ? false : true,
         'cb': bindings[i].callback,
         'el': vnode.elm
       });
@@ -31,7 +32,7 @@ const ShortcutsDirective = {
         ShortcutsHelper.mapFunctions[k].splice(ShortcutsHelper.findIndexOf(k, el), 1);
       }
       let i;
-      for (i in ShortcutsHelper.objAvoided) {
+      for (let i = 0; i < ShortcutsHelper.objAvoided.length; i++) {
         if (ShortcutsHelper.objAvoided[i] === el) {
           ShortcutsHelper.objAvoided.splice(i, 1);
           break;

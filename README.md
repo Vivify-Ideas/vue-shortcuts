@@ -46,6 +46,7 @@ Vue.use(VueShortcuts, { prevent: ['input'] })
 | focus | Boolean | `false` | Focus element instead of calling callback |
 | disabled | Boolean | `false` | Reactive property that disables that key |
 | avoid | Boolean | `false` | Prevent the event when this element is focused |
+| prevent | Boolean | `true` | Whether to prevent the default and stop propagation when pressing that key |
 
 ### Key list
 | Key                        | Shortkey Name |
