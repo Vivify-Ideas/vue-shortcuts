@@ -28,15 +28,13 @@ const ShortcutsDirective = {
     for (let i = 0; i < bindings.length; i++) {
       if (bindings[i]) {
         let k = bindings[i].shortcut.join('');
-
         ShortcutsHelper.mapFunctions[k].splice(ShortcutsHelper.findIndexOf(k, el), 1);
       }
-      let i;
-      for (let i = 0; i < ShortcutsHelper.objAvoided.length; i++) {
-        if (ShortcutsHelper.objAvoided[i] === el) {
-          ShortcutsHelper.objAvoided.splice(i, 1);
-          break;
-        }
+    }
+    for (let j = 0; j < ShortcutsHelper.objAvoided.length; j++) {
+      if (ShortcutsHelper.objAvoided[j] === el) {
+        ShortcutsHelper.objAvoided.splice(j, 1);
+        break;
       }
     }
   },
